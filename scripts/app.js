@@ -112,11 +112,16 @@ var arrayOptionsEnum = {
     anyOf: 'anyOf',
     oneOf: 'oneOf',
     allOf: 'allOf'
+}, idOptionsEnum = {
+  absoluteIds: "absoluteIds",
+  relativeIds: "relativeIds",
+  noIds: "noIds"
 };
 
 // User cannot change these values.
 app.constant('Version', 0.1);
 app.constant('ArrayOptions', arrayOptionsEnum);
+app.constant("IDOptions", idOptionsEnum);
 app.constant('Specification', 'http://json-schema.org/draft-04/schema#');
 
 // Assume some default values for user defined parameters.
@@ -125,7 +130,8 @@ var defaultOptions = {
     json: testData.starter,
     // Array options.
     arrayOptions: arrayOptionsEnum.arraySchema,
-    // General options.
+    idOptions: idOptionsEnum.noIds,
+  // General options.
     includeDefaults: false,
     includeEnums: false,
     forceRequired: true,

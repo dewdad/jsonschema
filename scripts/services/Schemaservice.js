@@ -4,7 +4,7 @@ angular.module('jsonschemaV4App')
     .service('Schemaservice', ['$log', 'Schemafactory',
         'ArrayOptions','Specification','Utility',
         function Schemaservice($log, Schemafactory,
-            ArrayOptions,Specification,Utility) {
+            ArrayOptions, IDOptions, Specification,Utility) {
 
             /* AngularJS will instantiate a singleton by calling "new"
             on this function. */
@@ -90,7 +90,7 @@ angular.module('jsonschemaV4App')
                 up the 'required' property from __required__ metadata.
             */
             this.clean = function(obj) {
-                 
+
                 var key = obj['__key__'];
                 console.log("clean obj (" + key + ")");
                 var count = 0;
@@ -409,35 +409,38 @@ angular.module('jsonschemaV4App')
 
             this.constructId = function(src, dst) {
 
-                if (UserDefinedOptions.absoluteIds) {
-                    if (src.root) {
-                        dst.id = UserDefinedOptions.url;
-                    } else {
-                        /*
-                        First time round, this will the child of root and will
-                        be: (http://jsonschema.net + '/' + address)
-                        */
-                        var asboluteId = (src.parent.id + '/' + src.id);
-                        dst.id = asboluteId;
+              switch (UserDefinedOptions.idOptions) {
+                case "absoluteIds":
+                  if (src.root) {
+                    dst.id = UserDefinedOptions.url;
+                  } else {
+                    /*
+                     First time round, this will the child of root and will
+                     be: (http://jsonschema.net + '/' + address)
+                     */
+                    var asboluteId = (src.parent.id + '/' + src.id);
+                    dst.id = asboluteId;
 
-                        // We MUST set the parent ID to the ABSOLUTE URL
-                        // so when the child builds upon it, it too is an
-                        // absolute URL.
-                        /*
-                        The current object will be a parent later on. By setting
-                        src.id now, any children of this object will call
-                        src.parent.id when constructing the absolute ID.
-                        */
-                        src.id = asboluteId;
-                    }
-                } else {
-                    // Relative IDs
-                    if (src.root) {
-                        dst.id = '/';
-                    } else {
-                        dst.id = src.id;
-                    }
-                }
+                    // We MUST set the parent ID to the ABSOLUTE URL
+                    // so when the child builds upon it, it too is an
+                    // absolute URL.
+                    /*
+                     The current object will be a parent later on. By setting
+                     src.id now, any children of this object will call
+                     src.parent.id when constructing the absolute ID.
+                     */
+                    src.id = asboluteId;
+                  }
+                  break;
+                case "relativeIds":
+                  // Relative IDs
+                  if (src.root) {
+                    dst.id = '/';
+                  } else {
+                    dst.id = src.id;
+                  }
+                  break;
+              }
 
                 dst.__key__ = src.key;
             };

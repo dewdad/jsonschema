@@ -93,6 +93,7 @@ angular.module('jsonschemaV4App')
                 UserDefinedOptions.forceRequired = $scope.forceRequired;
                 UserDefinedOptions.emptySchemas = $scope.emptySchemas;
                 UserDefinedOptions.arrayOptions = $scope.arrayOptions;
+                UserDefinedOptions.idOptions = $scope.idOptions;
                 UserDefinedOptions.absoluteIds = $scope.absoluteIds;
                 UserDefinedOptions.numericVerbose = $scope.numericVerbose;
                 UserDefinedOptions.stringsVerbose = $scope.stringsVerbose;
@@ -123,6 +124,7 @@ angular.module('jsonschemaV4App')
                 $scope.forceRequired = defaultOptions.forceRequired;
                 $scope.emptySchemas = defaultOptions.emptySchemas;
                 $scope.arrayOptions = defaultOptions.arrayOptions;
+                $scope.idOptions = defaultOptions.idOptions;
                 $scope.absoluteIds = defaultOptions.absoluteIds;
                 $scope.numericVerbose = defaultOptions.numericVerbose;
                 $scope.stringsVerbose = defaultOptions.stringsVerbose;
